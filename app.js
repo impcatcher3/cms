@@ -8,7 +8,6 @@ const path = require("path");
 const bcrypt = require("bcryptjs");
 
 const app = express();
-const router = express.Router(); // ??
 const port = 3000;
 const db = new loki("cms.db", {
 	autoload: true,
@@ -29,12 +28,8 @@ app.use(session({
 }));
 
 // Routes
-require("./routes/post")(app);// 
-require("./routes/user");// (app)
-
-// // Controllers
-// require("./controllers/postController")(app);
-// require("./controllers/userController")(app);
+require("./routes/post")(app);//
+// require("./routes/user"); // (app) necessary?
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
