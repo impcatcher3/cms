@@ -1,6 +1,9 @@
 > Maybe make use of res.responseText on client-side
 
 > Break up routes into independent files
+  > Where do login/logout/register belong?
+    > routes/authentication.js?
+    > each their own file?
   > Check status codes and responses
 
 > Move logic to controllers

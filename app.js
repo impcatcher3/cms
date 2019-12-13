@@ -1,13 +1,14 @@
-const express = require("express")
-const session = require('express-session');
+const express = require("express");
+const session = require("express-session");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const loki = require("lokijs");
-const LokiStore = require('connect-loki')(session);
-const path = require('path');
-const bcrypt = require('bcryptjs');
+const LokiStore = require("connect-loki")(session);
+const path = require("path");
+const bcrypt = require("bcryptjs");
 
 const app = express();
+const router = express.Router(); // ??
 const port = 3000;
 const db = new loki("cms.db", {
 	autoload: true,
@@ -15,9 +16,6 @@ const db = new loki("cms.db", {
 	autosave: true,
 	autosaveInterval: 4000
 });
-
-let posts;
-let users;
 
 const saltRounds = 10;
 const options = {
@@ -27,20 +25,28 @@ const options = {
 
 app.use(session({
     store: new LokiStore(options),
-    secret: 'keyboard cat'
+    secret: "keyboard cat"
 }));
+
+// Routes
+require("./routes/post")(app);// 
+require("./routes/user");// (app)
+
+// // Controllers
+// require("./controllers/postController")(app);
+// require("./controllers/userController")(app);
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + "/public"));
 
 function databaseInitialize() {
-  users = db.getCollection("users");
+  let users = db.getCollection("users");
   if (users === null) {
     users = db.addCollection("users");
   }
-  posts = db.getCollection("posts");
+  let posts = db.getCollection("posts");
   if (posts === null) {
     posts = db.addCollection("posts");
   }
@@ -51,6 +57,7 @@ function databaseInitialize() {
   showStats();
 }
 
+
 function showStats() {
   const users = db.getCollection("users");
   const posts = db.getCollection("posts");
@@ -60,39 +67,13 @@ function showStats() {
   console.log("Number of posts: " + count2);
 }
 
-app.get('/', function(req, res) {
+app.get("/", function(req, res) {
     let sess = LokiStore;
     console.log(sess);
-    res.sendFile(path.join(__dirname + '/public/index.html'));
+    res.sendFile(path.join(__dirname + "/public/index.html"));
 });
 
-app.get("/posts", (req, res) => {
-    (posts) ? res.json(posts.data) : res.status(404).send("Posts not found");
-});
 
-app.get("/users", (req, res) => {
-  (users) ? res.json(users.data) : res.status(404).send("Users not found");
-});
-
-app.get("/post/:id", (req, res) => {
-    const id = parseInt(req.params.id);
-    const post = posts.findObject({$loki:id});
-    (post) ? res.json(post) : res.status(404).send("Post not found");
-});
-
-app.post("/post", (req, res) => {
-  if (!LokiStore.authenticatedAs) {
-    res.status(403).send("No user authentication");
-    return;
-  }
-  const post = req.body;
-  console.log(post);
-  posts.insert({
-    username: LokiStore.authenticatedAs,
-    content: post.content
-  });
-  res.send("Added a post");
-});
 
 app.post("/register", (req, res) => {
   const user = req.body;
@@ -106,44 +87,11 @@ app.post("/register", (req, res) => {
   });
 })
 
-app.post("/post/:id", (req, res) => { // change with new loki
-    const id = parseInt(req.params.id);
-    console.log("Request to edit $loki: " + id);
-
-    const oldPost = posts.findObject({$loki:id});
-    const newPost = req.body;
-
-    oldPost.post = newPost;
-    posts.update(oldPost);
-
-    res.send("Edited a post");
-});
-
-app.delete("/post/:id", (req, res) => {
-    const id = parseInt(req.params.id);
-    console.log("Delete called for: " + id);
-    const post = posts.findObject({$loki:id});
-    console.log(post);
-    if (post) posts.remove(post);
-    console.log("Entry deleted");
-    (post) ? res.send("Deleted a post") : res.status("404").send("No post found");
-});
-
-app.delete("/user/:id", (req, res) => {
-    const id = parseInt(req.params.id);
-    console.log("Delete called for user: " + id);
-    const user = users.findObject({$loki:id});
-    console.log(user);
-    if (user) users.remove(user);
-    console.log("User deleted");
-    (user) ? res.send("Deleted a user") : res.status("404").send("No user found");
-});
-
 app.post("/login", (req, res) => {
   const form = req.body;
   const username = form.username2;
   const password = form.password2;
-  const user = users.findObject({'username':username});
+  const user = users.findObject({"username":username});
 
   if (!user) {
     res.status("404").send("Username not found");
@@ -162,7 +110,6 @@ app.post("/login", (req, res) => {
 
 app.get("/login", (req, res) => {
   let username = LokiStore.authenticatedAs;
-  console.log("Login username: " + username);
   (username === undefined) ? res.send("-") : res.send(username);
 });
 
