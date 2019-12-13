@@ -5,7 +5,7 @@ const loadPosts = () => {
               <div>
               <span>ID: </span>${post.$loki} <br />
               <span>Username: </span>${post.username} <br />
-              <span>Content: </span>${post.content} <br />
+              <span>Content: </span>${strip(post.content)} <br />
               <button onClick="deletePost(${post.$loki});">Delete</button><button onClick="editPost(${post.$loki})">Edit</button>
               </div>
               <hr />
@@ -101,6 +101,11 @@ const logout = () => {
 
 const showAlert = (x) => {
   alert(x);
+}
+
+const strip = (html) => {
+   var doc = new DOMParser().parseFromString(html, 'text/html');
+   return doc.body.textContent || "";
 }
 
 const terminateServer = () => {
