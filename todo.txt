@@ -1,0 +1,10 @@
+> Check status codes
+
+> Maybe make use of res.responseText on client-side
+
+> Break up routes into independent files
+
+> Move logic to controllers
+  > Check input from users
+		> Maximum lengths, Empty check, Duplicate username
+  > Fix editing posts
