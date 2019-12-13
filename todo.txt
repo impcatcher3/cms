@@ -1,8 +1,7 @@
-> Check status codes
-
 > Maybe make use of res.responseText on client-side
 
 > Break up routes into independent files
+  > Check status codes and responses
 
 > Move logic to controllers
   > Check input from users
