@@ -2,6 +2,10 @@
 # Created by https://www.gitignore.io/api/node
 # Edit at https://www.gitignore.io/?templates=node
 
+# our stuff
+session-store.db
+cms.db
+
 ### Node ###
 # Logs
 logs
@@ -79,9 +83,6 @@ typings/
 
 # nuxt.js build output
 .nuxt
-
-# sessiondb
-session-store.db
 
 # react / gatsby
 # public/
