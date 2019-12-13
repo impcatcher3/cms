@@ -1,0 +1,57 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  background: #000 url("https://www.myjewishlearning.com/wp-content/uploads/2005/12/pareve-christmas-1598x900.jpg") no-repeat center center;
+  background-size: cover;
+  color: #000;
+}
+
+.container {
+  max-width: 50%;
+  margin: 0 auto;
+  padding: 2em 1em;
+  background: rgba(255,255,255, .5);
+}
+  .posts hr {
+    border: 1px solid #f2f3f5;
+  }
+  .posts hr:nth-child(4n) {
+    border: 1px solid #846c51;
+  }
+
+  form > span {
+    display: inline-block;
+    width:4em;
+  }
+
+.terminate {
+  float: right;
+}
+
+.users {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  min-height: 100%;
+  background: rgba(255,255,255,.5);
+  padding: 2em 1em;
+}
+
+.users > div {
+  max-width: 20vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.logout {
+  cursor: pointer;
+  color: blue;
+  *float: right;
+}

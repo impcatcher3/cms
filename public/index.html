@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" href="style/style.css" />
+</head>
+  <body>
+    <div class="container">
+        <div id="posts" class="posts"></div>
+        <form action="" method="POST" id="post">
+          <span>Post:</span>
+            <input type="text" id="content" name="content" />
+            <input type="submit" id="submit" value="Submit" />
+        </form>
+        <form action="" method="POST" id="register">
+          <span>Register:</span>
+          <input type="text" id="username" name="username" />
+          <input type="text" id="password" name="password" />
+          <input type="submit" id="submit2" name="submit2" />
+        </form>
+        <form action="" method="POST" id="login">
+          <span>Login:</span>
+          <input type="text" id="username2" name="username2" />
+          <input type="text" id="password2" name="password2" />
+          <input type="submit" id="submit3" name="submit3" />
+        </form>
+        <div><span>Logged in as: </span><span id="currentUser"></span></div>
+        <div><span id="logout" class="logout" href="">Log out</span></div>
+        <div id="users" class="users"></div>
+        <a href="" id="terminate" class="terminate">Stop the server</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript">
+      $.delete = function(url, data, callback, type){
+
+        if ( $.isFunction(data) ){
+          type = type || callback,
+              callback = data,
+              data = {}
+        }
+
+        return $.ajax({
+          url: url,
+          type: 'DELETE',
+          success: callback,
+          data: data,
+          contentType: type
+        });
+      }
+
+      $.put = function(url, data, callback, type){
+
+        if ( $.isFunction(data) ){
+          type = type || callback,
+          callback = data,
+          data = {}
+        }
+
+        return $.ajax({
+          url: url,
+          type: 'PUT',
+          success: callback,
+          data: data,
+          contentType: type
+        });
+      }
+    </script>
+    <script src="script.js"></script>
+    <script src="https://cdn.rawgit.com/scottschiller/Snowstorm/master/snowstorm-min.js"></script>
+  </body>
+</html>
