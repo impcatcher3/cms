@@ -2,9 +2,8 @@
 # Created by https://www.gitignore.io/api/node
 # Edit at https://www.gitignore.io/?templates=node
 
-# our stuff
+# session-store
 session-store.db
-cms.db
 
 ### Node ###
 # Logs
