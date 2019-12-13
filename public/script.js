@@ -100,7 +100,8 @@ const logout = () => {
 }
 
 const showAlert = (x) => {
-  alert(x);
+  const alerts = $("#alerts");
+  alerts.append("> " + x + "<br />");
 }
 
 const strip = (html) => {
