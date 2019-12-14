@@ -58,7 +58,6 @@ module.exports = {
           username:user.username,
           password:hash
         });
-        console.log("User created: " + user.username);
         res.status("200").send("200: User created: " + user.username);
       });
     }

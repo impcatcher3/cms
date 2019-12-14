@@ -1,5 +1,3 @@
-> Is the database properly done this way
-
-> postController
-  > Anybody can delete and edit posts right now
-  > Maximum lengths, Empty check
+> Controllers
+  > fix duplicate code
+    > Prioritize postController
