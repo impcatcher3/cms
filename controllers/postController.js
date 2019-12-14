@@ -1,11 +1,9 @@
 const db = require("../db").db;
-const session = require("express-session");
-const LokiStore = require("connect-loki")(session);
 
 module.exports = {
     fetchAll: (req, res) => {
       const content = db.getCollection("posts").data;
-      res.json(content);
+      res.status("200").json(content);
     },
     fetchOne: (req, res) => {
       const id = parseInt(req.params.id);
@@ -18,8 +16,8 @@ module.exports = {
       res.status("200").json(post);
     },
     create: (req, res) => {
-      // LokiStore is here but the data is not in there
-      const username = LokiStore.authenticatedAs;
+      const sess = req.session;
+      const username = sess.authenticatedAs;
       const content = req.body.content;
       const posts = db.getCollection("posts");
 

@@ -5,7 +5,7 @@ const saltRounds = 10;
 module.exports = {
     fetchAll: (req, res) => {
       const content = db.getCollection("users").data;
-      res.json(content);
+      res.status("200").json(content);
     },
     fetchOne: (req, res) => {
       const id = parseInt(req.params.id);

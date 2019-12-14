@@ -2,12 +2,8 @@ const db = require("../db").db;
 const bcrypt = require("bcryptjs");
 const saltRounds = 10;
 
-const session = require("express-session");
-const LokiStore = require("connect-loki")(session);
-
 module.exports = {
   login: (req, res) => {
-    console.log("Login request");
     const form = req.body;
     const username = form.username2;
     const password = form.password2;
@@ -21,19 +17,20 @@ module.exports = {
     const hash = user.password;
     bcrypt.compare(password, hash, (err, boolean) => {
       if (boolean) {
-        LokiStore.authenticatedAs = username;
-        console.log("Successful authentication for: " + LokiStore.authenticatedAs);
+        req.session.authenticatedAs = username;
+        res.status("200").send("200: " + req.session.authenticatedAs);
+        return;
       }
-      res.send(boolean);
+      res.status("403").send("403: Password incorrect");
     });
   },
   authenticatedAs: (req, res) => {
-    const username = LokiStore.authenticatedAs;
+    const username = req.session.authenticatedAs;
     (username === undefined) ? res.send("-") : res.send(username);
   },
   logout: (req, res) => {
-    if (LokiStore.authenticatedAs) {
-      delete LokiStore.authenticatedAs;
+    if (req.session.authenticatedAs) {
+      delete req.session.authenticatedAs;
       res.status("200").send("Logout complete");
     } else {
       res.status("500").send("Logout failed");

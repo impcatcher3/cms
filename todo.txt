@@ -1,17 +1,11 @@
 > Move logic to controllers
-  > How to get loki session to controllers (properly)?
   > Is the database properly done this way?
 
 > Check input from users
   > Maximum lengths, Empty check, Duplicate username
 
 > Check status codes and responses
-
-> Use try catch things
+  > Look up codes and implement them in controllers
 
 > Currently broken
-  > Posting
-    > Empty LokiStore.authenticatedAs, see line 2
-  > Post editing
-
-> sessionController and postController session are not the same?
+  > Editing post
