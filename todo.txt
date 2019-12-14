@@ -9,3 +9,5 @@
 
 > Currently broken
   > Editing post
+
+> Anybody can delete and edit posts

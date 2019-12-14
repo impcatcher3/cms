@@ -44,5 +44,18 @@ module.exports = {
       }
       posts.remove(post);
       res.status("200").send("200: " + id);
+    },
+    edit: (req, res) => {
+      const id = parseInt(req.params.id);
+      const content = req.body.content;
+      const posts = db.getCollection("posts");
+      const post = posts.findObject({$loki:id});
+      if (!post) {
+        res.status("404").send("404: " + id);
+        return;
+      }
+      post.content = content;
+      posts.update(post);
+      res.status("200").send("200: " + id);
     }
 }

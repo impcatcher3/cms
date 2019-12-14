@@ -6,7 +6,7 @@ const loadPosts = () => {
               <span>ID: </span>${post.$loki} <br />
               <span>Username: </span>${post.username} <br />
               <span>Content: </span>${strip(post.content)} <br />
-              <button onClick="deletePost(${post.$loki});">Delete</button><button onClick="editPost(${post.$loki})">Edit</button>
+              <button onClick="deletePost(${post.$loki});">Delete</button><button onClick="editPost(${post.$loki})">Replace</button>
               </div>
               <hr />
           `
@@ -45,10 +45,9 @@ const loadSelf = () => {
 
 const postPost = (e) => {
   e.preventDefault();
-  let id = $("#submit").attr("data-id");
-  let url = (isNaN(id)) ? "http://127.0.0.1:3000/post" : `http://127.0.0.1:3000/post/${id}`;
+  let url = "http://127.0.0.1:3000/post";
 
-  $.post(url, $("#post").serialize()).done(function (){
+  $.post(url, $("#post").serialize()).done(() => {
     location.reload();
   }).fail((res) => {
     showAlert(res.responseText);
@@ -56,10 +55,11 @@ const postPost = (e) => {
 }
 
 const editPost = (id) => {
-    // $.get(`http://127.0.0.1:3000/post/${id}`, (data) => {
-    //   $("#content").val(data.post.content);
-    // });
-    // $("#submit").attr("data-id", id);
+  $.put(`http://127.0.0.1:3000/post/${id}`, $("#post").serialize()).done(() => {
+    location.reload();
+  }).fail((res) => {
+    showAlert(res.responseText);
+  });
 }
 
 const deletePost = (id) => {
@@ -85,22 +85,19 @@ const login = (e) => {
     type: "POST",
     url: "http://127.0.0.1:3000/session",
     data: $("#login").serialize()
-  }).done((boolean) => {
-    if (boolean) {
-      location.reload();
-    } else {
-      showAlert("Password is not adding up...")
-    }
+  }).done(() => {
+    location.reload();
   }).fail((res) => {
     showAlert(res.responseText);
   });
 }
 
-const logout = () => {
+const logout = (e) => {
+  e.preventDefault();
   $.ajax({
     type: "DELETE",
     url: "http://127.0.0.1:3000/session"
-  }).done((res) => {
+  }).done(() => {
     location.reload();
   }).fail((res) => {
     showAlert(res.responseText);

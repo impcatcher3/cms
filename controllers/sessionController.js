@@ -11,12 +11,12 @@ module.exports = {
     const user = users.findObject({"username":username});
 
     if (!user) {
-      res.status("404").send("Username not found");
+      res.status("404").send("404: Username not found");
       return;
     }
     const hash = user.password;
-    bcrypt.compare(password, hash, (err, boolean) => {
-      if (boolean) {
+    bcrypt.compare(password, hash, (err, success) => {
+      if (success) {
         req.session.authenticatedAs = username;
         res.status("200").send("200: " + req.session.authenticatedAs);
         return;
