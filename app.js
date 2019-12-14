@@ -21,8 +21,10 @@ app.use(session({
 // Routes - is this the right way?
 const post = require("./routes/post");
 const user = require("./routes/user");
+const sess = require("./routes/session");
 app.use(post);
 app.use(user);
+app.use(sess);
 
 
 app.use(cors());
