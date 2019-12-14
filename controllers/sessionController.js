@@ -31,9 +31,9 @@ module.exports = {
   logout: (req, res) => {
     if (req.session.authenticatedAs) {
       delete req.session.authenticatedAs;
-      res.status("200").send("Logout complete");
+      res.status("200").send("200: Logout successful");
     } else {
-      res.status("500").send("Logout failed");
+      res.status("500").send("500: Logout failed");
     }
   }
 }

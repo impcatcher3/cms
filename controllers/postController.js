@@ -22,7 +22,7 @@ module.exports = {
       const posts = db.getCollection("posts");
 
       if (!username) {
-        res.status("403").send("No authentication");
+        res.status("403").send("403: No authentication");
         return;
       }
 
@@ -32,7 +32,7 @@ module.exports = {
       }
 
       posts.insert(post);
-      res.status("200").send("Added a post");
+      res.status("200").send("200: Added a post");
     },
     delete: (req, res) => {
       const id = parseInt(req.params.id);
