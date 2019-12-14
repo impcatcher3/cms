@@ -1,13 +1,8 @@
-> Move logic to controllers
-  > Is the database properly done this way?
+> Is the database properly done this way?
 
 > Check input from users
   > Maximum lengths, Empty check, Duplicate username
+  > Anybody can delete and edit posts right now
 
 > Check status codes and responses
   > Look up codes and implement them in controllers
-
-> Currently broken
-  > Editing post
-
-> Anybody can delete and edit posts
