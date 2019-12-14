@@ -10,3 +10,7 @@
   > Check input from users
 		> Maximum lengths, Empty check, Duplicate username
   > Fix editing posts
+
+> rethink urls, they should be a resource
+> login/logout become /session (post/delete)
+  > logout becomes delete request

@@ -109,15 +109,10 @@ const strip = (html) => {
    return doc.body.textContent || "";
 }
 
-const terminateServer = () => {
-  $.get("http://127.0.0.1:3000/terminate");
-}
-
 // Event listeners
 $("#submit").click(postPost);
 $("#submit2").click(register);
 $("#submit3").click(login);
-$("#terminate").click(terminateServer);
 $("#logout").click(logout);
 
 // Init
