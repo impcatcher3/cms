@@ -34,7 +34,7 @@ const loadUsers = () => {
 }
 
 const loadSelf = () => {
-  $.get("http://127.0.0.1:3000/login", (username) => {
+  $.get("http://127.0.0.1:3000/session", (username) => {
     $("#currentUser").text(username);
   })
 }

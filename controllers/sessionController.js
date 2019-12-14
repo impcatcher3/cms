@@ -36,7 +36,7 @@ module.exports = {
     });
   },
   authenticatedAs: () => {
-    let username = LokiStore.authenticatedAs;
+    const username = LokiStore.authenticatedAs;
     (username === undefined) ? res.send("-") : res.send(username);
   },
   logout: () => {
