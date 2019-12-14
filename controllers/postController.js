@@ -21,8 +21,6 @@ module.exports = {
       const content = req.body.content;
       const posts = db.getCollection("posts");
 
-      console.log("LokiStore username: " + username);
-
       if (!username) {
         res.status("403").send("No authentication");
         return;
