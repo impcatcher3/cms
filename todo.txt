@@ -1,4 +1,9 @@
 > Is the database properly done this way
 > Check input from users
-  > Maximum lengths, Empty check
+  >
 > Anybody can delete and edit posts right now
+
+> userController
+  > Maximum lengths
+> postController
+  > Maximum lengths, Empty check
