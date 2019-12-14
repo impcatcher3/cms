@@ -1,4 +1,6 @@
 const db = require("../db").db;
+const bcrypt = require("bcryptjs");
+const saltRounds = 10;
 
 module.exports = {
     fetchAll: (req, res) => {
@@ -21,5 +23,21 @@ module.exports = {
       }
       users.remove(user);
       res.status("200").send("200: " + id);
+    },
+    register: (req, res) => {
+      const users = db.getCollection("users");
+      const user = req.body;
+      bcrypt.hash(user.password, saltRounds, function(err, hash) {
+        if (err) {
+          res.status("500").send("User could not be made");
+          return;
+        }
+        users.insert({
+          username:user.username,
+          password:hash
+        });
+        console.log("User created: " + user.username);
+        res.status("200").send("User created: " + user.username);
+      });
     }
 }

@@ -1,10 +1,12 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
+const bodyParser = require("body-parser");
+const port = 3000;
 
 const app = express();
-const port = 3000;
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
 
 const session = require("express-session");
 const LokiStore = require("connect-loki")(session);
@@ -26,8 +28,6 @@ const sess = require("./routes/session");
 app.use(post);
 app.use(user);
 app.use(sess);
-
-
 
 app.use(cors());
 app.use(express.json());

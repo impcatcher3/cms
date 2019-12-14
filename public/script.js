@@ -10,9 +10,10 @@ const loadPosts = () => {
               </div>
               <hr />
           `
-
           document.getElementById("posts").innerHTML = document.getElementById("posts").innerHTML + x;
       }
+    }).fail((res) => {
+      showAlert(res.responseText);
     });
 }
 
@@ -27,16 +28,19 @@ const loadUsers = () => {
             </div>
             <hr />
         `
-
         document.getElementById("users").innerHTML = document.getElementById("users").innerHTML + x;
     }
-  });
+  }).fail((res) => {
+    showAlert(res.responseText);
+  });;
 }
 
 const loadSelf = () => {
   $.get("http://127.0.0.1:3000/session", (username) => {
     $("#currentUser").text(username);
-  })
+  }).fail((res) => {
+    showAlert(res.responseText);
+  });
 }
 
 const postPost = (e) => {
@@ -46,27 +50,32 @@ const postPost = (e) => {
 
   $.post(url, $("#post").serialize()).done(function (){
     location.reload();
-  }).fail(() => {
-      showAlert("Log in first.")
+  }).fail((res) => {
+    showAlert(res.responseText);
   });
 }
 
 const editPost = (id) => {
-    $.get(`http://127.0.0.1:3000/post/${id}`, (data) => {
-      $("#content").val(data.post.content);
-    });
-    $("#submit").attr("data-id", id);
+    // $.get(`http://127.0.0.1:3000/post/${id}`, (data) => {
+    //   $("#content").val(data.post.content);
+    // });
+    // $("#submit").attr("data-id", id);
 }
 
 const deletePost = (id) => {
   $.delete(`http://127.0.0.1:3000/post/${id}`).done(() => {
     location.reload();
+  }).fail((res) => {
+    showAlert(res.responseText);
   });
 }
 
-const register = () => {
-  $.post("http://127.0.0.1:3000/register", $("#register").serialize()).done(() => {
+const register = (e) => {
+  e.preventDefault();
+  $.post("http://127.0.0.1:3000/user", $("#register").serialize()).done(() => {
     location.reload();
+  }).fail((res) => {
+    showAlert(res.responseText);
   });
 }
 
@@ -82,17 +91,16 @@ const login = (e) => {
     } else {
       showAlert("Password is not adding up...")
     }
-  }).fail(() => {
-    showAlert("Username not found");
+  }).fail((res) => {
+    showAlert(res.responseText);
   });
 }
 
 const logout = () => {
   $.ajax({
-    type: "POST",
-    url: "http://127.0.0.1:3000/logout"
+    type: "DELETE",
+    url: "http://127.0.0.1:3000/session"
   }).done((res) => {
-    //showAlert(res)
     location.reload();
   }).fail((res) => {
     showAlert(res.responseText);

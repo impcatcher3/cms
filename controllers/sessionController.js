@@ -5,24 +5,13 @@ const saltRounds = 10;
 const session = require("express-session");
 const LokiStore = require("connect-loki")(session);
 
-// review all
 module.exports = {
-  register: () => {
-    const user = req.body;
-    bcrypt.hash(user.password, saltRounds, function(err, hash) {
-      user.password = hash;
-      users.insert({
-        username:user.username,
-        password:user.password
-      });
-      res.send("Added a user");
-    });
-  },
   login: (req, res) => {
     console.log("Login request");
     const form = req.body;
     const username = form.username2;
     const password = form.password2;
+    const users = db.getCollection("users");
     const user = users.findObject({"username":username});
 
     if (!user) {
@@ -34,7 +23,6 @@ module.exports = {
       if (boolean) {
         LokiStore.authenticatedAs = username;
         console.log("Successful authentication for: " + LokiStore.authenticatedAs);
-        console.log(LokiStore);
       }
       res.send(boolean);
     });
@@ -43,7 +31,7 @@ module.exports = {
     const username = LokiStore.authenticatedAs;
     (username === undefined) ? res.send("-") : res.send(username);
   },
-  logout: () => {
+  logout: (req, res) => {
     if (LokiStore.authenticatedAs) {
       delete LokiStore.authenticatedAs;
       res.status("200").send("Logout complete");

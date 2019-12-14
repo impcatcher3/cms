@@ -1,4 +1,6 @@
 const db = require("../db").db;
+const session = require("express-session");
+const LokiStore = require("connect-loki")(session);
 
 module.exports = {
     fetchAll: (req, res) => {
@@ -16,8 +18,10 @@ module.exports = {
       res.status("200").json(post);
     },
     create: (req, res) => {
+      console.log(LokiStore)
       const username = LokiStore.authenticatedAs;
       const content = req.body.content;
+      console.log(username + ": " + content);
 
       if (!username) {
         res.status("403").send("No authentication");
@@ -29,9 +33,8 @@ module.exports = {
         content: content
       }
 
-      console.log(post);
       // posts.insert(post);
-      res.send("Added a post");
+      res.status("200").send("Added a post");
     },
     delete: (req, res) => {
       const id = parseInt(req.params.id);
