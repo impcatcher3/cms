@@ -1,7 +1,9 @@
-> Check status codes and responses
-  > Maybe make use of res.responseText on client-side
-
 > Move logic to controllers
+  > How to get loki session to controllers?
+  > How to get req.body to controllers?
 
 > Check input from users
   > Maximum lengths, Empty check, Duplicate username
+
+  > Check status codes and responses
+    > Maybe make use of res.responseText on client-side

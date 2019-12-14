@@ -16,7 +16,22 @@ module.exports = {
       res.status("200").json(post);
     },
     create: (req, res) => {
-      // code here
+      const username = LokiStore.authenticatedAs;
+      const content = req.body.content;
+
+      if (!username) {
+        res.status("403").send("No authentication");
+        return;
+      }
+
+      const post = {
+        username: username,
+        content: content
+      }
+
+      console.log(post);
+      // posts.insert(post);
+      res.send("Added a post");
     },
     delete: (req, res) => {
       const id = parseInt(req.params.id);
