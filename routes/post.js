@@ -4,14 +4,8 @@
 
   router.get("/posts", postController.fetchAll);
   router.get("/post/:id", postController.fetchOne);
-  router.post("/post", postController.newPost);
-
-  // Get specific post (for editing)
-  // app.get("/post/:id", (req, res) => {
-  //     const id = parseInt(req.params.id);
-  //     const post = posts.findObject({$loki:id});
-  //     (post) ? res.json(post) : res.status(404).send("Post not found");
-  // });
+  router.post("/post", postController.create);
+  router.delete("/post/:id", postController.delete)
 
   // Post a post!
   // app.post("/post", (req, res) => {
@@ -28,19 +22,6 @@
   //   res.send("Added a post");
   // });
   //
-  // // Edit a post - currently broken
-  // app.post("/post/:id", (req, res) => { // change with new loki
-  //     const id = parseInt(req.params.id);
-  //     console.log("Request to edit $loki: " + id);
-  //
-  //     const oldPost = posts.findObject({$loki:id});
-  //     const newPost = req.body;
-  //
-  //     oldPost.post = newPost;
-  //     posts.update(oldPost);
-  //
-  //     res.send("Edited a post");
-  // });
   //
   // // Delete a post
   // app.delete("/post/:id", (req, res) => {

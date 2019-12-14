@@ -2,16 +2,24 @@ const db = require("../db").db;
 
 module.exports = {
     fetchAll: (req, res) => {
-      res.json(db.getCollection("users").data);
+      const content = db.getCollection("users").data;
+      res.json(content);
     },
     fetchOne: (req, res) => {
       const id = parseInt(req.params.id);
-      const posts = db.getCollection("users");
-      const post = posts.findObject({$loki:id});
-      res.status("200").json(post);
+      const users = db.getCollection("users");
+      const user = users.findObject({$loki:id});
+      res.status("200").json(user);
     },
-    count: (req, res) => {
-      const count = db.getCollection("users").count();
-      res.send("Number of users in the database: " + count);
+    delete: (req, res) => {
+      const id = parseInt(req.params.id);
+      const users = db.getCollection("users");
+      const user = users.findObject({$loki:id});
+      if (!user) {
+        res.status("404").send("404: " + id);
+        return;
+      }
+      users.remove(user);
+      res.status("200").send("200: " + id);
     }
 }
