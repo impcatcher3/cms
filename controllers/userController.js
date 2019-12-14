@@ -30,8 +30,17 @@ module.exports = {
       res.status("200").send("200: " + id);
     },
     register: (req, res) => {
+      const maxLength = 16;
       const user = req.body;
       const users = db.getCollection("users");
+      if (user.username.length > maxLength) {
+        res.status("400").send("400: Username exceeds " + maxLength + " characters");
+        return;
+      }
+      if (user.password.length > maxLength) {
+        res.status("400").send("400: Password exceeds " + maxLength + " characters");
+        return;
+      }
       if (user.username === "" || user.password === "") {
         res.status("400").send("400: Fields cannot be empty");
         return;
