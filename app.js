@@ -11,6 +11,13 @@ app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
 const session = require("express-session");
 const LokiStore = require("connect-loki")(session);
 
+// Force save on Ctrl + C
+const db = require("./db").db;
+process.on('SIGINT', function() {
+  console.log("flushing database");
+  db.close();
+});
+
 app.use(session({
     store: new LokiStore({
 		  logErrors: true,
@@ -22,21 +29,14 @@ app.use(session({
 }));
 
 // Routes - is this the right way?
-const post = require("./routes/post");
-const user = require("./routes/user");
 const sess = require("./routes/session");
-app.use(post);
-app.use(user);
+const user = require("./routes/user");
+const post = require("./routes/post");
 app.use(sess);
+app.use(user);
+app.use(post);
 
 app.use(cors());
-app.use(express.json());
 app.use(express.static(__dirname + "/public"));
-
-app.get("/", function(req, res) {
-    let sess = LokiStore;
-    console.log("Session: " + sess);
-    res.sendFile(path.join(__dirname + "/public/index.html"));
-});
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));

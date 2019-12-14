@@ -15,10 +15,6 @@ function databaseInitialize() {
   if (posts === null) {
     posts = db.addCollection("posts");
   }
-  let stats = db.getCollection("stats");
-  if (stats === null) {
-    stats = db.addCollection("stats");
-  }
 }
 
 module.exports = {

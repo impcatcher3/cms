@@ -6,11 +6,12 @@
   > Maximum lengths, Empty check, Duplicate username
 
 > Check status codes and responses
-  > Maybe make use of res.responseText on client-side
 
 > Use try catch things
 
 > Currently broken
   > Posting
-    > Empty LokiStore.authenticatedAs
+    > Empty LokiStore.authenticatedAs, see line 2
   > Post editing
+
+> sessionController and postController session are not the same?

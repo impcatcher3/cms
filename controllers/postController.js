@@ -21,7 +21,9 @@ module.exports = {
       // LokiStore is here but the data is not in there
       const username = LokiStore.authenticatedAs;
       const content = req.body.content;
-      console.log("LokiStore: " + username);
+      const posts = db.getCollection("posts");
+
+      console.log("LokiStore username: " + username);
 
       if (!username) {
         res.status("403").send("No authentication");
@@ -33,7 +35,7 @@ module.exports = {
         content: content
       }
 
-      // posts.insert(post);
+      posts.insert(post);
       res.status("200").send("Added a post");
     },
     delete: (req, res) => {
