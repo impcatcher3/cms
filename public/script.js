@@ -25,6 +25,7 @@ const loadUsers = () => {
             <span>ID: </span>${user.$loki} <br />
             <span>User: </span>${user.username} <br />
             <span>Password: </span>${user.password} <br />
+            <button onClick="deleteUser(${user.$loki});">Delete</button> <br />
             </div>
             <hr />
         `
@@ -64,6 +65,14 @@ const editPost = (id) => {
 
 const deletePost = (id) => {
   $.delete(`http://127.0.0.1:3000/post/${id}`).done(() => {
+    location.reload();
+  }).fail((res) => {
+    showAlert(res.responseText);
+  });
+}
+
+const deleteUser = (id) => {
+  $.delete(`http://127.0.0.1:3000/user/${id}`).done(() => {
     location.reload();
   }).fail((res) => {
     showAlert(res.responseText);

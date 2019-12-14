@@ -14,6 +14,11 @@ module.exports = {
       res.status("200").json(user);
     },
     delete: (req, res) => {
+      const isAdmin = req.session.authenticatedAs === "admin";
+      if (!isAdmin) {
+        res.status("401").send("401: Unauthorized");
+        return;
+      }
       const id = parseInt(req.params.id);
       const users = db.getCollection("users");
       const user = users.findObject({$loki:id});
@@ -25,11 +30,15 @@ module.exports = {
       res.status("200").send("200: " + id);
     },
     register: (req, res) => {
-      const users = db.getCollection("users");
       const user = req.body;
+      if (user.username === "" || user.password === "") {
+        res.status("400").send("400: Fields cannot be empty");
+        return;
+      }
+      const users = db.getCollection("users");
       bcrypt.hash(user.password, saltRounds, function(err, hash) {
         if (err) {
-          res.status("500").send("User could not be made");
+          res.status("500").send("500: User not created");
           return;
         }
         users.insert({
@@ -37,7 +46,7 @@ module.exports = {
           password:hash
         });
         console.log("User created: " + user.username);
-        res.status("200").send("User created: " + user.username);
+        res.status("200").send("200: User created: " + user.username);
       });
     }
 }
