@@ -4,9 +4,8 @@ const saltRounds = 10;
 
 module.exports = {
   login: (req, res) => {
-    const form = req.body;
-    const username = form.username2;
-    const password = form.password2;
+    const username = req.body.username2;
+    const password = req.body.password2;
     const users = db.getCollection("users");
     const user = users.findObject({"username":username});
 
@@ -26,14 +25,14 @@ module.exports = {
   },
   authenticatedAs: (req, res) => {
     const username = req.session.authenticatedAs;
-    (username === undefined) ? res.send("-") : res.send(username);
+    (username === undefined) ? res.send("nobody") : res.send(username);
   },
   logout: (req, res) => {
     if (req.session.authenticatedAs) {
       delete req.session.authenticatedAs;
       res.status("200").send("200: Logout successful");
     } else {
-      res.status("500").send("500: Logout failed");
+      res.status("400").send("400: Logout unsuccessful");
     }
   }
 }
