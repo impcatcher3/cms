@@ -31,11 +31,15 @@ module.exports = {
     },
     register: (req, res) => {
       const user = req.body;
+      const users = db.getCollection("users");
       if (user.username === "" || user.password === "") {
         res.status("400").send("400: Fields cannot be empty");
         return;
       }
-      const users = db.getCollection("users");
+      if (users.findObject({username:user.username}) !== null) {
+        res.status("400").send("400: Duplicate username");
+        return;
+      }
       bcrypt.hash(user.password, saltRounds, function(err, hash) {
         if (err) {
           res.status("500").send("500: User not created");
