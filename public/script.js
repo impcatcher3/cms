@@ -74,7 +74,7 @@ const login = (e) => {
   e.preventDefault();
   $.ajax({
     type: "POST",
-    url: "http://127.0.0.1:3000/login",
+    url: "http://127.0.0.1:3000/session",
     data: $("#login").serialize()
   }).done((boolean) => {
     if (boolean) {

@@ -2,6 +2,9 @@ const db = require("../db").db;
 const bcrypt = require("bcryptjs");
 const saltRounds = 10;
 
+const session = require("express-session");
+const LokiStore = require("connect-loki")(session);
+
 // review all
 module.exports = {
   register: () => {
@@ -15,7 +18,8 @@ module.exports = {
       res.send("Added a user");
     });
   },
-  login: () => {
+  login: (req, res) => {
+    console.log("Login request");
     const form = req.body;
     const username = form.username2;
     const password = form.password2;
@@ -35,7 +39,7 @@ module.exports = {
       res.send(boolean);
     });
   },
-  authenticatedAs: () => {
+  authenticatedAs: (req, res) => {
     const username = LokiStore.authenticatedAs;
     (username === undefined) ? res.send("-") : res.send(username);
   },

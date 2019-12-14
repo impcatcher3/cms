@@ -1,12 +1,13 @@
 const express = require("express");
-const session = require("express-session");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const LokiStore = require("connect-loki")(session);
 const path = require("path");
 
 const app = express();
 const port = 3000;
+
+const session = require("express-session");
+const LokiStore = require("connect-loki")(session);
 
 app.use(session({
     store: new LokiStore({
@@ -25,6 +26,7 @@ const sess = require("./routes/session");
 app.use(post);
 app.use(user);
 app.use(sess);
+
 
 
 app.use(cors());
