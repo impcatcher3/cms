@@ -12,5 +12,5 @@
 
 > Currently broken
   > Posting
-    > Empty LokiStore.authenticatedAs\
+    > Empty LokiStore.authenticatedAs
   > Post editing

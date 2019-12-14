@@ -18,10 +18,10 @@ module.exports = {
       res.status("200").json(post);
     },
     create: (req, res) => {
-      console.log(LokiStore)
+      // LokiStore is here but the data is not in there
       const username = LokiStore.authenticatedAs;
       const content = req.body.content;
-      console.log(username + ": " + content);
+      console.log("LokiStore: " + username);
 
       if (!username) {
         res.status("403").send("No authentication");
